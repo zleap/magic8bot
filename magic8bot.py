@@ -67,6 +67,8 @@ RESPONSES = ["It is certain",
              "Very doubtful"] 
 
 answer = random.choice(RESPONSES)
+message =  "Hello, I have now joined ##zleap, please use !help to display options"
+irc.send('PRIVMSG '+ channel +' :' + message + '\n')
 
 while 1:
 	text=irc.recv(2040)
@@ -98,7 +100,7 @@ while 1:
 		
 	# user input !uptime output system uptime from bot	
 	if text.find(':!help') != -1:
-		output = "options, !umame !uptime !help !botexit,!magic8  !ping, !web, !sdtj"
+		output = "options, !umame !uptime !help !botexit,!magic8, !ping, !web, !sdtj,!fortune,!date"
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 		
@@ -115,17 +117,30 @@ while 1:
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 		
-				# user input !uptime output system uptime from bot	
+		# user input !sdtj output system uptime from bot	
 	if text.find(':!sdtj') != -1:
 		output = "https://sdtj.org.uk/"
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 
+	# user input fortune output pong from bot 	
+	if text.find(':!fortune') != -1:
+		output = subprocess.check_output("fortune", shell=True)
+		#print output 
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+
+# user input !date output pong from bot 	
+	if text.find(':!date') != -1:
+		output = subprocess.check_output("date", shell=True)
+		#print output 
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+
 		
-		# user input !uptime output system uptime from bot	
+		# user input !botexit output system uptime from bot	
 	if text.find(':!botexit') != -1:
 		output = "Magic 8 Quitting - Goodbye"
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
-		quit()
+		quit() 
 		
+	
