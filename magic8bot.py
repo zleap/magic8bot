@@ -28,6 +28,8 @@
 import socket
 import sys
 import subprocess
+import random
+import os
 
 #server = "192.168.1.130"
 #channel = "#zleap"
@@ -43,6 +45,29 @@ irc.send("USER "+ nickname + " "+ nickname +": Just testing\n")
 irc.send("NICK "+ nickname + "\n")
 irc.send("JOIN "+ channel +"\n")
 
+RESPONSES = ["It is certain",
+             "It is decidedly so",
+             "Without a doubt",
+             "Yes definitely",
+             "You may rely on it",
+             "As I see it yes",
+             "Most likely",
+             "Outlook good",
+             "Yes",
+             "Signs point to yes",
+             "Reply hazy try again",
+             "Ask again later",
+             "Better not tell you now",
+             "Cannot predict now",
+             "Concentrate and ask again",
+             "Don't count on it",
+             "My reply is no",
+             "My sources say no",
+             "Outlook not so good",
+             "Very doubtful"] 
+
+answer = random.choice(RESPONSES)
+
 while 1:
 	text=irc.recv(2040)
 	print text
@@ -57,26 +82,50 @@ while 1:
 		#print output 
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 #	
-		
-		# user input ping output pong from bot 	
-	if text.find(':!lsb') != -1:
-		output = subprocess.check_output("lsb_release -a", shell=True)
-		#print output 
-		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
-#		
-		
-		
+				
 		# user input ping output pong from bot 	
 	if text.find(':!uname') != -1:
 		output = subprocess.check_output("uname -a", shell=True)
 		#print output 
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 #		
-		
-	
+			
 	# user input !uptime output system uptime from bot	
 	if text.find(':!ping') != -1:
 		output = "pong"
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+		
+	# user input !uptime output system uptime from bot	
+	if text.find(':!help') != -1:
+		output = "options, !umame !uptime !help !botexit,!magic8  !ping, !web, !sdtj"
+		#print output
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+		
+	# user input !uptime output system uptime from bot	
+	if text.find(':!magic8') != -1:
+		answer = random.choice(RESPONSES)
+		output =  answer
+		#print output
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+	
+		# user input !uptime output system uptime from bot	
+	if text.find(':!web') != -1:
+		output = "https://personaljournal.ca/paulsutton/"
+		#print output
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+		
+				# user input !uptime output system uptime from bot	
+	if text.find(':!sdtj') != -1:
+		output = "https://sdtj.org.uk/"
+		#print output
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+
+		
+		# user input !uptime output system uptime from bot	
+	if text.find(':!botexit') != -1:
+		output = "Magic 8 Quitting - Goodbye"
+		#print output
+		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+		quit()
 		
