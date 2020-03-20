@@ -31,16 +31,16 @@ import subprocess
 import random
 import os
 
-#server = "192.168.1.130"
-#channel = "#zleap"
-#nickname = "zleapbot"
 
 server = "irc.freenode.net"
 channel = "##zleap"
 nickname = "magic8"
 
+#zleap: for the server password method, send 'PASS accountname:password" before NICK and USER - https://github.com/zleap/magic8bot/blob/master/magic8bot.py#L44
+# if you want to do SASL it's a bit more work but wortwhile - https://ircv3.net/irc/#sasl-authentication for the spec and https://github.com/atheme/atheme/blob/master/contrib/cap_sasl.pl is a good reference implementation
 irc = socket .socket(socket.AF_INET, socket.SOCK_STREAM)
 irc.connect((server, 6667))
+#irc.send("PASS"+acname + " "+pass +":testing\n")
 irc.send("USER "+ nickname + " "+ nickname +": Just testing\n")
 irc.send("NICK "+ nickname + "\n")
 irc.send("JOIN "+ channel +"\n")
@@ -84,12 +84,8 @@ while 1:
 		#print output 
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 #	
-				
-		# user input ping output pong from bot 	
-	if text.find(':!uname') != -1:
-		output = subprocess.check_output("uname -a", shell=True)
-		#print output 
-		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
+			
+
 #		
 			
 	# user input !uptime output system uptime from bot	
@@ -100,7 +96,7 @@ while 1:
 		
 	# user input !uptime output system uptime from bot	
 	if text.find(':!help') != -1:
-		output = "options, !umame !uptime !help !botexit,!magic8, !ping, !web, !sdtj,!fortune,!date"
+		output = "options,  !uptime !help !botexit,!magic8, !ping, !web, !sdtj,!fortune,!date"
 		#print output
 		irc.send('PRIVMSG '+ channel +' :' + output + '\n')
 		
